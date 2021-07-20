@@ -5,7 +5,7 @@
 #include<stdio.h>
 
 //Function to computer square root of the number.
-float square_root(int n)
+float square_root(int n , int p)
 {
 	int s = 0, l = n;
 	int mid;
@@ -13,6 +13,7 @@ float square_root(int n)
 	//variable to store the answer
 	float res=0.0;
 	
+	//For computing integral part of square root
 	while (s <= l) {
 		mid = (s + l) / 2;
 		//if its equal
@@ -30,6 +31,16 @@ float square_root(int n)
 			l = mid - 1;
 		}
 	}
+	//For computing fractional part of square root upto given presion
+        float k = 0.1;
+	for (int i = 0; i < p; i++) {
+		while (res * res <= n) {
+			res += k;
+		}
+
+		res = res - k;
+		k = k / 10;
+	}
 
 	return res;
 }
@@ -43,25 +54,14 @@ int main()
         scanf("%d",&num);
     
         //Declare precision and take value for precision.
-        int p;
+        int pre;
         printf("Enter a precision ");
-        scanf("%d",&p);
+        scanf("%d",&pre);
 	 
 	//Function calling 
-        float res=square_root(num);
-	
-	//For computing fractional part of square root upto given presion
-        float k = 0.1;
-	for (int i = 0; i < p; i++) {
-		while (res * res <= num) {
-			res += k;
-		}
-
-		res = res - k;
-		k = k / 10;
-	}
+        float res=square_root(num,pre);
 	
 	//print the result
-        printf("%0.*f",p,res);
+        printf("%0.*f",pre,res);
 	return 0;
 }
